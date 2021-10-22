@@ -53,7 +53,7 @@ namespace SimonApp
         }
         static int User()
         {
-            int userNum = Console.Read();
+            int userNum = Convert.ToInt32(Console.ReadLine());
             return userNum;
         }
     }
