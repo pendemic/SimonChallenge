@@ -11,64 +11,33 @@ namespace SimonApp
     {
         static void Main(string[] args)
         {
-            Greeting();
-            Console.ReadKey();
-            Console.Clear();
-            int randNum = Random();
-            Timer();
-            int userNum = User();
+            SimonMem game = new SimonMem();
             int counter = 0;
-            bool isCheck = Check(randNum, userNum);
-            do
+            while (!game.GameOver)
             {
-                Console.Clear();
-                randNum = Random();
-                Timer();
-                userNum = User();
-                isCheck = Check(randNum, userNum);
+                displayCurrentRound(game);
+                int userNum = 0;
                 counter++;
-            }
-            while (isCheck);
-            Console.WriteLine("Game over! Your score is " + counter);
+                do
+                {
+                    Console.WriteLine("Enter number: ");
+                    userNum = Convert.ToInt32(Console.ReadLine());
 
-        }
-        static void Greeting()
-        {
-            Console.WriteLine("Welcome to the Simon Game");
-            Console.WriteLine("Press any key to play");
-        }
-        static List<int> Random()
-        {
-            Random randNum = new Random();
-            List<int> randomNumbers = new List<int>();
-            for (int i = 0; i < 100; i++)
-            {
-                randomNumbers.Add(randNum.Next(0, 9));
+                } while (game.Check(userNum));
             }
-            return randomNumbers;
+            Console.WriteLine("Game Over! You made it to round {0}.",counter);
         }
-        static void Timer()
+        private static void displayCurrentRound(SimonMem game)
         {
-            Thread.Sleep(2000);
             Console.Clear();
-        }
-        static bool Check(int randNum, int userNum)
-        {
-            bool isMatch = true;
-            if (randNum == userNum)
+            foreach (int num in game.numbers)
             {
-                isMatch = true;
+                Console.WriteLine("Round: " + game.numbers.Count + "\n");
+                Thread.Sleep(1000);
+                Console.WriteLine(num);
+                Console.Clear();
             }
-            else
-            {
-                isMatch = false;
-            }
-            return isMatch;
-        }
-        static int User()
-        {
-            int userNum = Convert.ToInt32(Console.ReadLine());
-            return userNum;
+            Console.WriteLine("Round: " + game.numbers.Count + "\n");
         }
     }
 }
